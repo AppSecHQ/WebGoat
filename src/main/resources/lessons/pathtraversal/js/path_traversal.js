@@ -1,3 +1,4 @@
+
 webgoat.customjs.profileUpload = function () {
 
     var picture = document.getElementById("uploadedFile").files[0];
@@ -11,7 +12,9 @@ webgoat.customjs.profileUpload = function () {
 
 webgoat.customjs.profileUploadCallback = function () {
     $.get("PathTraversal/profile-picture", function (result, status) {
-        document.getElementById("preview").src = "data:image/png;base64," + result;
+        var base64String = "data:image/png;base64," + result;
+        var sanitizedBase64String = sanitizeHtml(base64String);
+        document.getElementById("preview").src = sanitizedBase64String;
     });
 }
 
@@ -27,7 +30,9 @@ webgoat.customjs.profileUploadFix = function () {
 
 webgoat.customjs.profileUploadCallbackFix = function () {
     $.get("PathTraversal/profile-picture", function (result, status) {
-        document.getElementById("previewFix").src = "data:image/png;base64," + result;
+        var base64String = "data:image/png;base64," + result;
+        var sanitizedBase64String = sanitizeHtml(base64String);
+        document.getElementById("previewFix").src = sanitizedBase64String;
     });
 }
 
@@ -44,20 +49,26 @@ webgoat.customjs.profileUploadRemoveUserInput = function () {
 
 webgoat.customjs.profileUploadCallbackRemoveUserInput = function () {
     $.get("PathTraversal/profile-picture", function (result, status) {
-        document.getElementById("previewRemoveUserInput").src = "data:image/png;base64," + result;
+        var base64String = "data:image/png;base64," + result;
+        var sanitizedBase64String = sanitizeHtml(base64String);
+        document.getElementById("previewRemoveUserInput").src = sanitizedBase64String;
     });
 }
 
 
 webgoat.customjs.profileUploadCallbackRetrieval = function () {
     $.get("PathTraversal/profile-picture", function (result, status) {
-        document.getElementById("previewRetrieval").src = "data:image/png;base64," + result;
+        var base64String = "data:image/png;base64," + result;
+        var sanitizedBase64String = sanitizeHtml(base64String);
+        document.getElementById("previewRetrieval").src = sanitizedBase64String;
     });
 }
 
 function newRandomPicture() {
     $.get("PathTraversal/random-picture", function (result, status) {
-        document.getElementById("randomCatPicture").src = "data:image/png;base64," + result;
+        var base64String = "data:image/png;base64," + result;
+        var sanitizedBase64String = sanitizeHtml(base64String);
+        document.getElementById("randomCatPicture").src = sanitizedBase64String;
     });
 }
 
