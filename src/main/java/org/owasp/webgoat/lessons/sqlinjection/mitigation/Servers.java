@@ -1,3 +1,4 @@
+
 /*
  * SPDX-FileCopyrightText: Copyright © 2017 WebGoat authors
  * SPDX-License-Identifier: GPL-2.0-or-later
@@ -45,12 +46,17 @@ public class Servers {
   public List<Server> sort(@RequestParam String column) throws Exception {
     List<Server> servers = new ArrayList<>();
 
+    // Validate column parameter against whitelist
+    List<String> allowedColumns = List.of("id", "hostname", "ip", "mac", "status", "description");
+    if (!allowedColumns.contains(column)) {
+      throw new IllegalArgumentException("Invalid column name");
+    }
+
     try (var connection = dataSource.getConnection()) {
       try (var statement =
           connection.prepareStatement(
-              "select id, hostname, ip, mac, status, description from SERVERS where status <> 'out"
-                  + " of order' order by "
-                  + column)) {
+              "select id, hostname, ip, mac, status, description from SERVERS where status <> 'out of order' order by ?")) {
+        statement.setString(1, column);
         try (var rs = statement.executeQuery()) {
           while (rs.next()) {
             Server server =
