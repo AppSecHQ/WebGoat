@@ -1,0 +1,6 @@
+# Python dependencies with known vulnerabilities (SCA triggers)
+
+# Critical vulnerabilities
+requests==2.19.1
+
+
