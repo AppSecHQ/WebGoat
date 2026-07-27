@@ -1,3 +1,4 @@
+
 /*
  * SPDX-FileCopyrightText: Copyright © 2017 WebGoat authors
  * SPDX-License-Identifier: GPL-2.0-or-later
@@ -9,6 +10,7 @@ import static org.owasp.webgoat.container.assignments.AttackResultBuilder.succes
 import static org.springframework.util.StringUtils.hasText;
 
 import com.google.common.collect.Maps;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -119,6 +121,6 @@ public class ResetLinkAssignment implements AssignmentEndpoint {
 
   private boolean checkIfLinkIsFromTom(String resetLinkFromForm, String username) {
     String resetLink = userToTomResetLink.getOrDefault(username, "unknown");
-    return resetLink.equals(resetLinkFromForm);
+    return MessageDigest.isEqual(resetLink.getBytes(), resetLinkFromForm.getBytes());
   }
 }
